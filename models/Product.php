@@ -39,24 +39,17 @@ class Product extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {
-        return [
-            [['category_id', 'price', 'description', 'image', 'size', 'color', 'material'], 'default', 'value' => null],
-            [['stock'], 'default', 'value' => 0],
-            [['category_id', 'stock'], 'default', 'value' => null],
-            [['category_id', 'stock'], 'integer'],
-            [['name', 'slug'], 'required'],
-            [['price'], 'number'],
-            [['description'], 'string'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name', 'slug'], 'string', 'max' => 200],
-            [['image'], 'string', 'max' => 255],
-            [['size', 'color'], 'string', 'max' => 50],
-            [['material'], 'string', 'max' => 100],
-            [['slug'], 'unique'],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::class, 'targetAttribute' => ['category_id' => 'id']],
-        ];
-    }
+{
+    return [
+        [['name', 'slug'], 'required'],
+        [['category_id', 'stock'], 'integer'],
+        [['price'], 'number'],
+        [['description', 'size', 'color', 'material'], 'string'],
+        [['created_at', 'updated_at'], 'safe'],  // Добавить эту строку
+        [['name', 'slug', 'image'], 'string', 'max' => 255],
+        [['slug'], 'unique'],
+    ];
+}
 
     /**
      * {@inheritdoc}

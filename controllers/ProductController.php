@@ -53,12 +53,14 @@ class ProductController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+    public function actionView($slug)
+{
+    $model = Product::findOne(['slug' => $slug]);
+    if ($model === null) {
+        throw new \yii\web\NotFoundHttpException();
     }
+    return $this->render('view', ['model' => $model]);
+}
 
     /**
      * Creates a new Product model.

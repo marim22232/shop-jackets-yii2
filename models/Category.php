@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $description
  * @property string|null $created_at
  *
- * @property Products[] $products
+ * @property Product[] $products
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -61,8 +61,8 @@ class Category extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getProducts()
-    {
-        return $this->hasMany(Products::class, ['category_id' => 'id']);
-    }
+{
+    return $this->hasMany(Product::class, ['category_id' => 'id']);
+}
 
 }

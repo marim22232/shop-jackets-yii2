@@ -21,7 +21,7 @@ use Yii;
  * @property string|null $created_at
  * @property string|null $updated_at
  *
- * @property Categories $category
+ * @property Category $category
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -78,9 +78,9 @@ class Product extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
-    {
-        return $this->hasOne(Categories::class, ['id' => 'category_id']);
-    }
+   public function getCategory()
+{
+    return $this->hasOne(Category::class, ['id' => 'category_id']);
+}
 
 }

@@ -49,14 +49,20 @@ class CategoryController extends Controller
 
     /**
      * Displays a single Category model.
-     * @param int $id ID
+     * @param string $slug
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($slug)
     {
+        $model = Category::findOne(['slug' => $slug]);
+        
+        if ($model === null) {
+            throw new NotFoundHttpException('Категория не найдена');
+        }
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -71,7 +77,7 @@ class CategoryController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'slug' => $model->slug]);
             }
         } else {
             $model->loadDefaultValues();
@@ -92,11 +98,11 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'slug' => $model->slug]);
         }
-
+        
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -118,7 +124,6 @@ class CategoryController extends Controller
 
     /**
      * Finds the Category model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
      * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
